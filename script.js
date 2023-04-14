@@ -1,72 +1,33 @@
-$('#currentDay').text(dayjs().format('MM/DD/YY HH:mm')); 
-const currentTime = dayjs();
+let currentTime = dayjs();
+let currentHour = currentTime.format('HH');
+const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+$('#currentDay').text(currentTime.format('MM/DD/YY HH:mm')); 
 
-const timeBlocks = [
-  {
-    hourBlocks: '#hour-9',
-    hour: 9
-  },
+$(hours).each( function(i, hour){
+    let id = `hour-${hour}`;
+    let storedText = localStorage.getItem(id);
+    let timeBlock = document.getElementById(id);
+    console.log(timeBlock);
+    let description = timeBlock.getElementsByClassName('description');
+    console.log(description);
+    description[0].innerHTML = storedText;  
+  let timeElement = document.getElementById(id);
+  if (hour < currentHour) {
+    timeElement.style.backgroundColor = "gray";
+  } else if (hour === currentHour) {
+    timeElement.style.backgroundColor = "red";    
+  } else {
+    timeElement.style.backgroundColor = "green";
+  }   
+});
 
-  {
-    hourBlocks: '#hour-10',
-    hour: 10
-  },
-
-  {
-    hourBlocks: '#hour-11',
-    hour: 11
-  },
-
-  {
-    hourBlocks: '#hour-12',
-    hour: 12
-  },
-
-  {
-    hourBlocks: '#hour-13',
-    hour: 13
-  },
-
-  {
-    hourBlocks: '#hour-14',
-    hour: 14
-  },
-
-  {
-    hourBlocks: 'hour-15',
-    hour: 15
-  },
-
-  {
-    hourBlocks: '#hour-16',
-    hour: 16,
-  },
-
-  {
-    hourBlocks: '#hour-17',
-    hour: 17
-  }
-];
-
-let hour;
-
-
-
-
+$(".saveBtn").on('click', function () {
+  var text = $(this).siblings(".description").val();
+  localStorage.setItem($(this).parent().attr("id"), text);
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-$(".saveBtn").on('click', function (event) {
-  console.log(event);
-  var textArea = $(this).siblings(".description").val()//localstorage.getitem inside val)
-  console.log(textArea);
-  var time = $(this).parent().attr("id");
-  console.log(time);  
-  console.log(currentTime);
-  console.log()
-  
-
 
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -80,11 +41,6 @@ $(".saveBtn").on('click', function (event) {
   // local storage.How might the id be
   // useful when saving the description in local storage?
 
-  //if currentTime > x do y
-     // else do z
-
-  
-  //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
