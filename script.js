@@ -1,24 +1,22 @@
 let currentTime = dayjs();
-let currentHour = currentTime.format('HH');
+let currentHour = parseInt(currentTime.format('HH'));
 const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-$('#currentDay').text(currentTime.format('MM/DD/YY HH:mm')); 
+$('#currentDay').text(currentTime.format('MMMM DD, YYYY HH:mm')); 
 
-$(hours).each( function(i, hour){
-    let id = `hour-${hour}`;
-    let storedText = localStorage.getItem(id);
-    let timeBlock = document.getElementById(id);
-    console.log(timeBlock);
-    let description = timeBlock.getElementsByClassName('description');
-    console.log(description);
-    description[0].innerHTML = storedText;  
-  let timeElement = document.getElementById(id);
-  if (hour < currentHour) {
-    timeElement.style.backgroundColor = "gray";
-  } else if (hour === currentHour) {
-    timeElement.style.backgroundColor = "red";    
-  } else {
-    timeElement.style.backgroundColor = "green";
-  }   
+hours.forEach( function(hour){
+    let id = `#hour-${hour}`;    
+    let timeBlock = $(id);
+    let description = $('.description', timeBlock);
+    let storedText = localStorage.getItem(id.substring(1));
+    description.val(storedText);  
+    timeBlock.removeClass('past present future');
+    if (hour < currentHour) {
+      timeBlock.addClass('past');
+    } else if (hour === currentHour) {
+      timeBlock.addClass('present');   
+    } else {
+      timeBlock.addClass('future');
+    }   
 });
 
 $(".saveBtn").on('click', function () {
