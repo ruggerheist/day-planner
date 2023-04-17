@@ -10,3 +10,5 @@ The user may simply input their acitivity to the corresponding hour and click th
 
 ### Citations
 For this project, I imported DayJS for a time and date keeping interface. Bootstrap was already linked and availble with the code provided to start this application.
+
+[Link to Live Application](https://ruggerheist.github.io/day-planner/)
